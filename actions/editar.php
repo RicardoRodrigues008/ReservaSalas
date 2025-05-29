@@ -52,7 +52,7 @@ if($rows->num_rows > 0){
         <label for="exampleFormControlInput3">Reservador</label>
       </div>
       <div class="mb-3 form-floating">
-        <input type="datetime-local" class="form-control" id="dataHora" name="datahora" required>
+        <input type="datetime-local" value="<?=$data?>" class="form-control" id="dataHora" name="datahora" required>
         <label for="dataHora" class="form-label">Data e Hora</label>
       </div>
       </div>

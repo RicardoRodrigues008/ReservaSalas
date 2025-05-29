@@ -44,7 +44,6 @@
                     <div class="mb-3">
                       <label for="dataHora" class="form-label">Data e Hora</label>
                       <input type="datetime-local" class="form-control" id="dataHora" name="data_hora" required>
-
                     </div>
                 </div>
                 <div class="modal-footer">

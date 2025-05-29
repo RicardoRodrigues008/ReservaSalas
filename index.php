@@ -9,6 +9,7 @@
     <title>Sistema de Reserva de Salas</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body class="bg-gray-100">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
@@ -65,28 +66,34 @@
                         <th class="w-2/5 py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Descrição</th>
                         <th class="w-1/5 py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Reservado por</th>
                         <th class="w-1/5 py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Data e Hora</th>
+                        <th class="w-1/5 py-2 px-4 bg-gray-200 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b">
-                        <td class="py-2 px-4 text-sm text-gray-700">Sala A101</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">Reunião de planejamento</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">João Silva</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">22/05/2024 14:00</td>
-                    </tr>
-                    <tr class="border-b bg-gray-50">
-                        <td class="py-2 px-4 text-sm text-gray-700">Sala B202</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">Workshop de Marketing</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">Maria Oliveira</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">21/05/2024 09:00</td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="py-2 px-4 text-sm text-gray-700">Sala C303</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">Treinamento de TI</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">Carlos Souza</td>
-                        <td class="py-2 px-4 text-sm text-gray-700">20/05/2024 16:00</td>
-                    </tr>
-                    <!-- Adicione mais linhas conforme necessário -->
+                <?php
+                    require_once('./config/database/database.php');
+                    $sql = "SELECT * FROM salas ORDER BY id";
+                    $rows = $con->query($sql);
+                    if ($rows->num_rows > 0) {
+                    while ($row = $rows->fetch_assoc()) {
+                        echo '
+                                <tr class="border-b">
+                                    <td class="py-2 px-4 text-sm text-gray-700">' . $row['salas'] . '</td>
+                                    <td class="py-2 px-4 text-sm text-gray-700">' . $row['descr'] . '</td>
+                                    <td class="py-2 px-4 text-sm text-gray-700">' . $row['reservador'] . '</td>
+                                    <td class="py-2 px-4 text-sm text-gray-700">' . $row['data_criacao'] . '</td>
+                                    <td class="text-sm text-gray-700 d-flex flex-row">
+                                        <a  class="btn btn-danger" href="actions/deletar.php?id='.$row['id'].'">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                        <a class="btn btn-primary" href="actions/editar.php?id='.$row['id'].'">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        </td>
+                                </tr>';
+                        }
+                    }
+                ?>
                 </tbody>
             </table>
         </div>
